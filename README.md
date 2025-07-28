@@ -60,7 +60,7 @@ telegram_nudify_bot/
 ### 1. Automated Setup
 
 ```bash
-# Clone or download the project
+git clone git@github.com:AhmedKashima/telegram_nudify_bot.git
 cd telegram_nudify_bot
 
 # Run automated setup
