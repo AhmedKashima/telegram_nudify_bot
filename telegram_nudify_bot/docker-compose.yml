@@ -1,0 +1,179 @@
+# version: '3.8'
+
+# services:
+#   nudify-bot:
+#     build: .
+#     container_name: telegram-nudify-bot
+#     restart: unless-stopped
+    
+#     # GPU support
+#     deploy:
+#       resources:
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: 1
+#               capabilities: [gpu]
+    
+#     # Environment variables
+#     environment:
+#       - NVIDIA_VISIBLE_DEVICES=all
+#       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    
+#     # Volume mounts
+#     volumes:
+#       # Mount models directory for persistent model storage
+#       - ./models:/app/models
+#       # Mount temp directory for temporary files
+#       - ./temp:/app/temp
+#       # Mount output directory for results
+#       - ./output:/app/output
+#       # Mount logs directory
+#       - ./logs:/app/logs
+#       # Mount environment file
+#       - ./.env:/app/.env:ro
+    
+#     # Network configuration
+#     networks:
+#       - bot-network
+    
+#     # Resource limits
+#     deploy:
+#       resources:
+#         limits:
+#           memory: 8G
+#           cpus: '4.0'
+#         reservations:
+#           memory: 4G
+#           cpus: '2.0'
+    
+#     # Health check
+#     healthcheck:
+#       test: ["CMD", "python3", "-c", "import torch; print('GPU available:', torch.cuda.is_available())"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 3
+#       start_period: 60s
+    
+#     # Logging
+#     logging:
+#       driver: "json-file"
+#       options:
+#         max-size: "10m"
+#         max-file: "3"
+
+# networks:
+#   bot-network:
+#     driver: bridge 
+
+
+# version: '3.8'
+
+# services:
+#   nudify-bot:
+#     build: .
+#     container_name: telegram-nudify-bot
+#     restart: unless-stopped
+
+#     # GPU support + resource limits (merged into one deploy block)
+#     deploy:
+#       resources:
+#         limits:
+#           memory: 8G
+#           cpus: '4.0'
+#         reservations:
+#           devices:
+#             - driver: nvidia
+#               count: 1
+#               capabilities: [gpu]
+#           memory: 4G
+#           cpus: '2.0'
+
+#     # Environment variables
+#     environment:
+#       - NVIDIA_VISIBLE_DEVICES=all
+#       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+#     # Volume mounts
+#     volumes:
+#       - ./models:/app/models
+#       - ./temp:/app/temp
+#       - ./output:/app/output
+#       - ./logs:/app/logs
+#       - ./.env:/app/.env:ro
+
+#     # Network configuration
+#     networks:
+#       - bot-network
+
+#     # Health check
+#     healthcheck:
+#       test: ["CMD", "python3", "-c", "import torch; print('GPU available:', torch.cuda.is_available())"]
+#       interval: 30s
+#       timeout: 10s
+#       retries: 3
+#       start_period: 60s
+
+#     # Logging
+#     logging:
+#       driver: "json-file"
+#       options:
+#         max-size: "10m"
+#         max-file: "3"
+
+# networks:
+#   bot-network:
+#     driver: bridge
+
+# version: '3.8'
+
+services:
+  nudify-bot:
+    build: .
+    container_name: telegram-nudify-bot
+    restart: unless-stopped
+
+    # Убрал блок deploy.resources.devices с nvidia (GPU)
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+          cpus: '4.0'
+        reservations:
+          memory: 4G
+          cpus: '2.0'
+
+    # Окружение: убрал NVIDIA_*, добавил переменные для CPU
+    environment:
+      - USE_GPU=false
+      - DEVICE=cpu
+
+    volumes:
+      - ./models:/app/models
+      - ./temp:/app/temp
+      - ./output:/app/output
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+
+    networks:
+      - bot-network
+
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import torch; print('GPU available:', torch.cuda.is_available())"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  bot-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16

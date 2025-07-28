@@ -1,0 +1,30 @@
+# Telegram Bot
+python-telegram-bot==20.7
+python-dotenv==1.0.0
+
+# Image Processing
+Pillow==10.1.0
+opencv-python==4.8.1.78
+numpy==1.24.3
+
+# Stable Diffusion
+# diffusers==0.24.0
+diffusers>=0.27.2
+transformers==4.35.2
+accelerate==0.24.1
+torch==2.1.1
+torchvision==0.16.1
+# huggingface_hub==0.20.3
+
+huggingface_hub
+
+# Human Segmentation
+rembg==2.0.50
+
+# Utilities
+requests==2.31.0
+aiofiles==23.2.1
+asyncio==3.4.3
+
+# GPU Support
+nvidia-ml-py==12.535.133 
