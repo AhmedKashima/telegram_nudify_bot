@@ -19,7 +19,8 @@ This bot is strictly intended for:
 
 ## 📁 Project Structure
 
-📁 telegram_nudify_bot/
+```
+telegram_nudify_bot/
 ├── 📄 config.py
 ├── 📄 docker-compose.yml
 ├── 📄 Dockerfile
@@ -27,17 +28,22 @@ This bot is strictly intended for:
 ├── 📂 logs/
 ├── 📄 main.py
 ├── 📂 models/
+│   └── 🧠 custom-model.safetensors
 ├── 📂 output/
 ├── 📂 pipeline/
+│   ├── 🏭 nudify.py
+│   └── 🖼️ image_processor.py
 ├── 📂 __pycache__/
 ├── 📄 README.md
 ├── 📄 requirements.txt
 ├── 📄 setup.py
 ├── 📂 temp/
 ├── 📂 utils/
+│   ├── 🔐 auth.py
+│   └── 🖼️ image_utils.py
 ├── 📂 venv/
 └── 📂 wheels/
-
+```
 
 ### 1. 📥 Clone & Enter Directory
 ```bash
@@ -66,11 +72,21 @@ docker compose up --build
 User Submission
 📤 Sends photo (JPEG/PNG)
 
-Bot Processing
-├─ 🔒 User ID verification
-├─ 🖼️ Image validation
-├─ ✂️ Background segmentation (rembg/U2Net)
-├─ 🎨 Stable Diffusion img2img processing
-├─ 💧 
-└─ 📤 Returns processed image
 
+### Pro Tips:
+1. **Character Reference**:
+   - `├─` = Vertical branch
+   - `└─` = Last item
+   - `│  ` = Vertical spacer (for sub-items)
+
+2. **Multi-level Example**:
+```markdown
+**Full Pipeline**
+├─ 🔍 Input Phase
+│  ├─ 📩 Receive photo
+│  └─ ✅ Verify format
+├─ 🛠️ Processing
+│  ├─ ✂️ Segmentation
+│  └-- 🎨 Diffusion
+└─ 📤 Output
+    └-- ⏩ Send result
